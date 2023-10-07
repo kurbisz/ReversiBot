@@ -11,7 +11,6 @@ public class AlphaBeta extends Algorithm {
 
     public static long STATISTICS_END_TIME = 0, STATISTICS_EVAL_TIME = 0;
 
-//    public static HashMap<Long, Integer> cachedMoves = new HashMap<>();
 
     public AlphaBeta(int n, int playerNumber, int depth, Heuristic heuristic) {
         super(n, playerNumber, depth, heuristic);
@@ -40,26 +39,26 @@ public class AlphaBeta extends Algorithm {
         int actBest = isMax ? Integer.MIN_VALUE : Integer.MAX_VALUE;
         int startAlpha = alpha;
         int startBeta = beta;
-        for (Move move : getChildren(m, player)) {
-            MyPair myPair = minMax(move, actDepth + 1, startAlpha, startBeta, !isMax);
+        List<Move> children = getChildren(m, player);
+        if (children.isEmpty()) {
+            return minMax(m, actDepth, alpha, beta, !isMax);
+        }
+        for (Move move : children) {
 //            if (actDepth == 0) {
-//                System.out.println(move + " " + myPair.eval);
+//                System.out.println("TEST: " + Utils.toNormalMove(move.lastMove, n));
 //            }
+            MyPair myPair = minMax(move, actDepth + 1, startAlpha, startBeta, !isMax);
+
             if (best == null || (isMax && myPair.eval > actBest) || (!isMax && myPair.eval < actBest)){
                 best = move;
                 actBest = myPair.eval;
             }
 
-            if(isMax) {
-                startAlpha = Math.max(startAlpha, myPair.eval);
-            }
-            else {
-                startBeta = Math.min(startBeta, myPair.eval);
-            }
+            if(isMax) startAlpha = Math.max(startAlpha, myPair.eval);
+            else startBeta = Math.min(startBeta, myPair.eval);
 
-            if (startBeta <= startAlpha) {
-                break;
-            }
+            if (startBeta <= startAlpha) break;
+
         }
         return new MyPair(best, actBest);
     }

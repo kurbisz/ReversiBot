@@ -19,9 +19,8 @@ public class HeuristicTester {
         this.heuristic2 = heuristic2;
     }
 
-    public void fight(String host, int port, int depth) throws IOException, InterruptedException {
+    public void fight(int depth) {
 
-        final ExecutorService exec = Executors.newFixedThreadPool(2);
         heuristic1.playerNumber = 1;
         BotPlayer g1 = new BotPlayer(1, depth, heuristic1, false);
         heuristic2.playerNumber = 2;
@@ -37,7 +36,7 @@ public class HeuristicTester {
         g2 = new BotPlayer(1, depth, heuristic2, false);
 
         GameServer gameServer2 = new GameServer(g2, g1);
-        int res2 = gameServer.play();
+        int res2 = gameServer2.play();
         System.out.println("GAME 2: " + res2);
 
 

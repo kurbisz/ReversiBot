@@ -20,22 +20,7 @@ public class Board {
     }
 
     public void move(int move, byte playerNumber) {
-        fields[move] = playerNumber;
-        int x = move % n, y = move / n;
-        if (Utils.checkBottom(fields, n, playerNumber, move, x, y)) moveFields(playerNumber, move, n);
-        if (Utils.checkTop(fields, n, playerNumber, move, x, y)) moveFields(playerNumber, move, -n);
-        if (Utils.checkLeft(fields, n, playerNumber, move, x, y)) moveFields(playerNumber, move, -1);
-        if (Utils.checkRight(fields, n, playerNumber, move, x, y)) moveFields(playerNumber, move, 1);
-        if (Utils.checkRightBottom(fields, n, playerNumber, move, x, y)) moveFields(playerNumber, move, n+1);
-        if (Utils.checkLeftBottom(fields, n, playerNumber, move, x, y)) moveFields(playerNumber, move, n-1);
-        if (Utils.checkRightTop(fields, n, playerNumber, move, x, y)) moveFields(playerNumber, move, -n+1);
-        if (Utils.checkLeftTop(fields, n, playerNumber, move, x, y)) moveFields(playerNumber, move, -n-1);
-    }
-
-    private void moveFields(byte playerNumber, int move, int add) {
-        for (int i = 1; fields[move + i * add] != playerNumber; i++) {
-            fields[move + i * add] = playerNumber;
-        }
+        Utils.move(fields, move, n, playerNumber);
     }
 
     public byte getPlayer(int x, int y) {

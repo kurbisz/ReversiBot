@@ -1,13 +1,16 @@
 package com.kurbisz;
 
 import com.kurbisz.heuristics.SimpleHeuristic;
+import com.kurbisz.player.BotPlayer;
 import com.kurbisz.player.HumanPlayer;
 
-public class Main {
+public class PlayerVsBot {
     public static void main(String[] args) {
+        int n = 8;
+
         HumanPlayer player1 = new HumanPlayer(1);
-        HumanPlayer player2 = new HumanPlayer(2);
-        GameServer gameServer = new GameServer(player1, player2);
+        BotPlayer botPlayer = new BotPlayer(2, 3, new SimpleHeuristic(2, n), true);
+        GameServer gameServer = new GameServer(player1, botPlayer);
         gameServer.play();
     }
 }

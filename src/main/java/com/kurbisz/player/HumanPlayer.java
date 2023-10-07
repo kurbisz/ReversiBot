@@ -21,7 +21,7 @@ public class HumanPlayer extends Player {
         while (true) {
             try {
                 b.printBoard();
-                if (!isAnyMove(b.fields)) {
+                if (!Utils.isAnyMove(b.fields, n, playerNumber)) {
                     System.out.println("You do not have any possible moves! Your turn was skipped.");
                     return -1;
                 }
@@ -37,15 +37,6 @@ public class HumanPlayer extends Player {
 
             System.out.println("Invalid field number!");
         }
-    }
-
-    public boolean isAnyMove(byte[] field) {
-        for (int i = 0; i < n * n; i++) {
-            if (Utils.isValidMove(field, n, playerNumber, i)) {
-                return true;
-            }
-        }
-        return false;
     }
 
 }

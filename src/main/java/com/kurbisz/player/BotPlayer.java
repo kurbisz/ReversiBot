@@ -12,23 +12,18 @@ public class BotPlayer extends Player {
     private int depth;
     private Heuristic heuristic;
     private boolean logs;
-    private Algorithm algorithm;
 
     public BotPlayer(int playerNumber, int depth, Heuristic heuristic, boolean logs) {
-        this(playerNumber, depth, heuristic, logs, null);
-    }
-
-    public BotPlayer(int playerNumber, int depth, Heuristic heuristic, boolean logs, Algorithm algorithm) {
         super(playerNumber);
         this.playerNumber = playerNumber;
         this.depth = depth;
         this.heuristic = heuristic;
         this.logs = logs;
-        this.algorithm = algorithm;
     }
 
     @Override
     public int play(Board b) {
+        b.printBoard();
         Algorithm a = new AlphaBeta(b.n, playerNumber, depth, heuristic);
 
         long begin = System.nanoTime();

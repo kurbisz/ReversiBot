@@ -47,7 +47,7 @@ public class Utils {
     }
 
     public static boolean checkLeft(byte[] field, int n, int playerNr, int move, int x, int y) {
-        if (x >= 2 && field[move - 1] != playerNr) {
+        if (x >= 2 && field[move - 1] == 3 - playerNr) {
             for (int i = 2; i <= x; i++) {
                 int val = field[move - i];
                 if (val == 0) break;
@@ -87,7 +87,7 @@ public class Utils {
 
     public static boolean checkLeftTop(byte[] field, int n, int playerNr, int move, int x, int y) {
         if (move - 2 * n >= 0 && x >= 2 && field[move - n - 1] == 3 - playerNr) {
-            for (int i = 2; i <= x && move - i * n < n * n; i++) {
+            for (int i = 2; i <= x && move - i * n >= 0; i++) {
                 int val = field[move - (n+1) * i];
                 if (val == 0) break;
                 if (val == playerNr) {
@@ -100,7 +100,7 @@ public class Utils {
 
     public static boolean checkRightTop(byte[] field, int n, int playerNr, int move, int x, int y) {
         if (move - 2 * n >= 0 && x < n - 2 && field[move - n + 1] == 3 - playerNr) {
-            for (int i = 2; i + x < n && move - i * n < n * n; i++) {
+            for (int i = 2; i + x < n && move - i * n >= 0; i++) {
                 int val = field[move + (1 - n) * i];
                 if (val == 0) break;
                 if (val == playerNr) {
@@ -179,4 +179,44 @@ public class Utils {
         return randomArr;
     }
 
+    public static void move(byte[] fields, int move, int n, byte playerNumber) {
+        fields[move] = playerNumber;
+
+        int x = move % n, y = move / n;
+        if (Utils.checkBottom(fields, n, playerNumber, move, x, y)) moveFields(fields, playerNumber, move, n);
+        if (Utils.checkTop(fields, n, playerNumber, move, x, y)) moveFields(fields, playerNumber, move, -n);
+        if (Utils.checkLeft(fields, n, playerNumber, move, x, y)) moveFields(fields, playerNumber, move, -1);
+        if (Utils.checkRight(fields, n, playerNumber, move, x, y)) moveFields(fields, playerNumber, move, 1);
+        if (Utils.checkRightBottom(fields, n, playerNumber, move, x, y)) moveFields(fields, playerNumber, move, n+1);
+        if (Utils.checkLeftBottom(fields, n, playerNumber, move, x, y)) moveFields(fields, playerNumber, move, n-1);
+        if (Utils.checkRightTop(fields, n, playerNumber, move, x, y)) moveFields(fields, playerNumber, move, -n+1);
+        if (Utils.checkLeftTop(fields, n, playerNumber, move, x, y)) moveFields(fields, playerNumber, move, -n-1);
+    }
+
+    private static void moveFields(byte[] fields, byte playerNumber, int move, int add) {
+        for (int i = 1; fields[move + i * add] != playerNumber; i++) {
+            fields[move + i * add] = playerNumber;
+        }
+    }
+
+    public static boolean isAnyMove(byte[] fields, int n, int playerNumber) {
+        for (int i = 0; i < n * n; i++) {
+            if (Utils.isValidMove(fields, n, playerNumber, i)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static int getWinner(byte[] fields, int n) {
+        int[] numberOfPawns = new int[2];
+        for (int i = 0; i < n*n; i++) {
+            if (fields[i] != 0) {
+                numberOfPawns[fields[i] - 1]++;
+            }
+        }
+        if (numberOfPawns[0] > numberOfPawns[1]) return 0;
+        if (numberOfPawns[0] < numberOfPawns[1]) return 1;
+        return 2;
+    }
 }

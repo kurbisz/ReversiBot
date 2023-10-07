@@ -31,7 +31,7 @@ public class GameServer {
             board.move(move, (byte) (actualPlayer + 1));
             actualPlayer = (byte) (1 - actualPlayer);
         }
-        int winner = getWinner(board);
+        int winner = Utils.getWinner(board.fields, n);
         if (logs) {
             if (winner == 2) System.out.println("DRAW");
             else System.out.println("PLAYER " + (actualPlayer == 1 ? "X" : "O") + " WON!");
@@ -46,16 +46,6 @@ public class GameServer {
         board.changeField(3, 3, (byte) 2);
         board.changeField(4, 4, (byte) 2);
         return board;
-    }
-
-    private int getWinner(Board board) {
-        int[] numberOfPawns = new int[2];
-        for (int i = 0; i < n*n; i++) {
-            numberOfPawns[board.getPlayer(i)]++;
-        }
-        if (numberOfPawns[0] > numberOfPawns[1]) return 0;
-        if (numberOfPawns[0] < numberOfPawns[1]) return 1;
-        return 2;
     }
 
 }

@@ -18,7 +18,7 @@ public class Main2 {
             _O___
             O___O
          */
-        int res2 = h.getPossibleMoves(new byte[] {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2}, 1);
-        System.out.println(res2);
+//        int res2 = h.getPossibleMoves(new byte[] {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2}, 1);
+//        System.out.println(res2);
     }
 }

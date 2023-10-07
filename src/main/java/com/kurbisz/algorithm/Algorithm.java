@@ -30,9 +30,9 @@ public abstract class Algorithm {
         List<Move> list = new ArrayList<>();
         for (int i = 0; i < n * n; i++) {
             int ind = heuristic.randomArr[i];
-            if (move.field[ind] == 0) {
+            if (Utils.isValidMove(move.field, n, player, ind)) {
                 byte[] newBoard = Utils.cloneBoard(move.field);
-                newBoard[ind] = (byte) player;
+                Utils.move(newBoard, ind, n, (byte) player);
                 list.add(new Move(newBoard, ind));
             }
         }
