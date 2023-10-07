@@ -4,7 +4,7 @@ import com.kurbisz.player.Player;
 
 public class GameServer {
 
-    private static boolean logs = true;
+    private static boolean logs = false;
 
     // players[0] - white, players[1] - black
     private Player[] players;

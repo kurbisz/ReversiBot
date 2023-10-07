@@ -7,6 +7,7 @@ import com.kurbisz.heuristics.Heuristic;
 
 public class BotPlayer extends Player {
 
+    private static Object STATISTICS_OVERALL_TIME_OBJ = new Object();
     public static long STATISTICS_OVERALL_TIME = 0;
 
     private int depth;
@@ -23,12 +24,14 @@ public class BotPlayer extends Player {
 
     @Override
     public int play(Board b) {
-        b.printBoard();
+        if (logs) b.printBoard();
         Algorithm a = new AlphaBeta(b.n, playerNumber, depth, heuristic);
 
         long begin = System.nanoTime();
         int minMaxMove = a.getMove(b.fields);
-        STATISTICS_OVERALL_TIME += System.nanoTime() - begin;
+        synchronized (STATISTICS_OVERALL_TIME_OBJ) {
+            STATISTICS_OVERALL_TIME += System.nanoTime() - begin;
+        }
         return minMaxMove;
     }
 
