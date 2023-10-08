@@ -17,6 +17,10 @@ public class GameServer {
         this.players = new Player[] {player1, player2};
     }
 
+    /**
+     *
+     * @return number of player that won, 0 means draw
+     */
     public int play() {
         Board board = getStartingBoard();
         byte actualPlayer = 0;
@@ -27,16 +31,17 @@ public class GameServer {
                 if (lastMove < 0) break;
                 continue;
             }
-            if (logs) System.out.println("Player " + (actualPlayer == 1 ? "X" : "O") + " moved to " + Utils.toNormalMove(move, n));
+            if (logs) System.out.println("Player " + (actualPlayer == 0 ? "X" : "O") + " moved to " + Utils.toNormalMove(move, n));
             board.move(move, (byte) (actualPlayer + 1));
             actualPlayer = (byte) (1 - actualPlayer);
         }
         int winner = Utils.getWinner(board.fields, n);
         if (logs) {
             if (winner == 2) System.out.println("DRAW");
-            else System.out.println("PLAYER " + (actualPlayer == 1 ? "X" : "O") + " WON!");
+            else System.out.println("PLAYER " + (actualPlayer == 0 ? "X" : "O") + " WON!");
         }
-        return winner;
+        if (winner == 2) return 0;
+        return players[winner].getPlayerNumber();
     }
 
     private Board getStartingBoard() {

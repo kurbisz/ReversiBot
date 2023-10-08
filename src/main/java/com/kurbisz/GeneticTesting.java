@@ -33,7 +33,7 @@ public class GeneticTesting {
 
         try {
             GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm();
-            geneticAlgorithm.calculateForDepth(playerNumber, depth);
+            geneticAlgorithm.calculateForDepth(playerNumber, depth, true);
             System.out.println("DEPTH: " + depth);
             System.out.println("PLAYER: " + playerNumber);
             System.out.println("END TIME: " + AlphaBeta.STATISTICS_END_TIME);

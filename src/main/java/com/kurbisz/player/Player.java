@@ -17,4 +17,8 @@ public abstract class Player {
 
     public abstract int play(Board b);
 
+    public int getPlayerNumber() {
+        return playerNumber;
+    }
+
 }

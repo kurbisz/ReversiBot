@@ -5,7 +5,7 @@ import com.kurbisz.heuristics.SimpleHeuristic;
 import com.kurbisz.Utils;
 import com.kurbisz.player.BotPlayer;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -14,8 +14,9 @@ import java.util.stream.Collectors;
 
 public class GeneticAlgorithm {
 
+    private String folderName = "results", lastFileName = "last-loop.txt";
     private int n = 8, threads = 4;
-    private int amount = 36, left = amount/4, crossover = amount/4, randoms = amount/4, loops = 100, fromCoefficient = -100000, toCoefficient = 100000;
+    private int amount = 16, left = amount/4, crossover = amount/4, randoms = amount/4, loops = 100, fromCoefficient = -100000, toCoefficient = 100000;
     private Random r = new Random();
 
     public GeneticAlgorithm() {}
@@ -31,8 +32,13 @@ public class GeneticAlgorithm {
         this.toCoefficient = toCoefficient;
     }
 
-    public void calculateForDepth(int playerNumber, int depth) throws InterruptedException {
+    public void calculateForDepth(int playerNumber, int depth, boolean loadProgress) throws InterruptedException {
         List<HeuristicData> list = new ArrayList<>();
+
+        createResultsFolder();
+
+        int startLoop = 0;
+        if (loadProgress) startLoop = readFromLastFile(playerNumber, list);
 
         while (list.size() < amount) {
             list.add(getRandom(playerNumber));
@@ -53,19 +59,19 @@ public class GeneticAlgorithm {
                     heuristicData1.heuristic.playerNumber = playerNumber;
                     BotPlayer player1 = new BotPlayer(playerNumber, depth, heuristicData1.heuristic, false);
 
-                    HeuristicData heuristicData2 = list.get((j + i) % n);
+                    HeuristicData heuristicData2 = list.get((j + i) % amount);
                     heuristicData2.heuristic.playerNumber = 3 - playerNumber;
                     BotPlayer player2 = new BotPlayer(3 - playerNumber, depth, heuristicData1.heuristic, false);
 
                     final GameServer gameServer = new GameServer(player1, player2);
 
-                    final int ii = i, jj = j;
+//                    final int ii = i, jj = j;
                     Runnable runnable = () -> {
                         int res = gameServer.play();
-                        System.out.println("ENDED " + ii + " vs " + jj);
+//                        System.out.println("ENDED " + ii + " vs " + jj);
                         synchronized (sync) {
-                            if (res == 2 - playerNumber) heuristicData1.wins++;
-                            else if (res == playerNumber - 1) heuristicData2.wins++;
+                            if (res == playerNumber) heuristicData1.wins++;
+                            else if (res == 3 - playerNumber) heuristicData2.wins++;
                         }
                     };
                     exec.submit(runnable);
@@ -75,19 +81,29 @@ public class GeneticAlgorithm {
             exec.shutdown();
             exec.awaitTermination(1, TimeUnit.DAYS);
 
-            list = getBest(list);
-            System.out.println("");
-            System.out.println("FINISHED LOOP " + nr);
-            for (HeuristicData heuristic : list) {
-                String str = "";
-
-                for (int stage = 0; stage <= SimpleHeuristic.stages.length; stage++) {
-                    for (int i = 0; i < SimpleHeuristic.coefficientAmount; i++) {
-                        str += heuristic.heuristic.coefficients[stage][i] + ", ";
-                    }
-                    str += "||| ";
+            try {
+                PrintWriter writer = new PrintWriter(folderName + File.separator + "loop-" + (nr + startLoop + 1) + ".txt", "UTF-8");
+                PrintWriter lastWriter = new PrintWriter(folderName + File.separator + lastFileName, "UTF-8");
+                lastWriter.println((nr + startLoop + 1));
+                for (HeuristicData heuristic : list) {
+                    String str = heuristic.toString();
+                    writer.println(str);
+                    lastWriter.println(str);
                 }
-                System.out.println("Coefficients: " + str + " (" + heuristic.rounds + "," + heuristic.wins + ") - " + Arrays.toString(heuristic.heuristic.randomArr));
+                writer.close();
+                lastWriter.close();
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            }
+
+            list = getBest(list);
+
+            System.out.println("");
+            System.out.println("FINISHED LOOP " + (nr+startLoop));
+            for (HeuristicData heuristic : list) {
+                System.out.println(heuristic);
             }
 
 
@@ -106,6 +122,37 @@ public class GeneticAlgorithm {
         }
 
 
+    }
+
+    private void createResultsFolder() {
+        File directory = new File(folderName);
+        if (! directory.exists()){
+            directory.mkdir();
+        }
+    }
+
+    private int readFromLastFile(int playerNumber, List<HeuristicData> list) {
+        File file = new File(folderName + File.separator + lastFileName);
+
+        if (file.exists()) {
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(file));
+                String firstLine;
+                int nr = 0;
+                if ((firstLine = reader.readLine()) != null) {
+                    nr = Integer.parseInt(firstLine);
+                }
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    list.add(HeuristicData.fromString(playerNumber, n, line));
+                }
+                reader.close();
+                System.out.println("LOADED PROGRESS FROM FILE " + lastFileName + "!");
+                return nr;
+            } catch (IOException e) {}
+        }
+        return 0;
     }
 
     private HeuristicData getRandom(int playerNumber) {
@@ -179,18 +226,5 @@ public class GeneticAlgorithm {
         return placeCoefficient;
     }
 
-    class HeuristicData implements Comparable<HeuristicData> {
-        public SimpleHeuristic heuristic;
-        public Integer wins = 0, rounds = 0;
-
-        public HeuristicData(SimpleHeuristic heuristic) {
-            this.heuristic = heuristic;
-        }
-
-        @Override
-        public int compareTo(HeuristicData o) {
-            return o.wins.compareTo(wins);
-        }
-    }
 
 }

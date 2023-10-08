@@ -3,9 +3,6 @@ package com.kurbisz.algorithm;
 import com.kurbisz.Move;
 import com.kurbisz.Utils;
 import com.kurbisz.heuristics.Heuristic;
-import com.kurbisz.heuristics.HeuristicType;
-import com.kurbisz.heuristics.SimpleHeuristic;
-import com.kurbisz.heuristics.ZeroHeuristic;
 
 import java.util.ArrayList;
 import java.util.List;

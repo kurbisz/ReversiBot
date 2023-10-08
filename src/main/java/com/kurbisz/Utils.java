@@ -2,126 +2,129 @@ package com.kurbisz;
 
 import java.util.Random;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 public class Utils {
 
     public static boolean isValidMove(byte[] field, int n, int playerNr, int move) {
         if (field[move] != 0) return false;
 
         int x = move % n, y = move / n;
-        if (checkBottom(field, n, playerNr, move, x, y)) return true;
-        if (checkTop(field, n, playerNr, move, x, y)) return true;
-        if (checkLeft(field, n, playerNr, move, x, y)) return true;
-        if (checkRight(field, n, playerNr, move, x, y)) return true;
-        if (checkRightBottom(field, n, playerNr, move, x, y)) return true;
-        if (checkLeftBottom(field, n, playerNr, move, x, y)) return true;
-        if (checkRightTop(field, n, playerNr, move, x, y)) return true;
-        if (checkLeftTop(field, n, playerNr, move, x, y)) return true;
+        if (checkBottom(field, n, playerNr, move, x, y) > 0) return true;
+        if (checkTop(field, n, playerNr, move, x, y) > 0) return true;
+        if (checkLeft(field, n, playerNr, move, x, y) > 0) return true;
+        if (checkRight(field, n, playerNr, move, x, y) > 0) return true;
+        if (checkRightBottom(field, n, playerNr, move, x, y) > 0) return true;
+        if (checkLeftBottom(field, n, playerNr, move, x, y) > 0) return true;
+        if (checkRightTop(field, n, playerNr, move, x, y) > 0) return true;
+        if (checkLeftTop(field, n, playerNr, move, x, y) > 0) return true;
 
         return false;
     }
 
-    public static boolean checkBottom(byte[] field, int n, int playerNr, int move, int x, int y){
+    public static int checkBottom(byte[] field, int n, int playerNr, int move, int x, int y){
         if (move + 2 * n < n * n && field[move + n] == 3 - playerNr) {
             for (int i = move + 2 * n; i < n * n; i += n) {
                 int val = field[i];
                 if (val == 0) break;
                 if (val == playerNr) {
-                    return true;
+                    return (i - move) / n - 1;
                 }
             }
         }
-        return false;
+        return -1;
     }
 
-    public static boolean checkTop(byte[] field, int n, int playerNr, int move, int x, int y) {
+    public static int checkTop(byte[] field, int n, int playerNr, int move, int x, int y) {
         if (move - 2 * n >= 0 && field[move - n] == 3 - playerNr) {
             for (int i = move - 2 * n; i >= 0; i -= n) {
                 int val = field[i];
                 if (val == 0) break;
                 if (val == playerNr) {
-                    return true;
+                    return (move - i) / n - 1;
                 }
             }
         }
-        return false;
+        return -1;
     }
 
-    public static boolean checkLeft(byte[] field, int n, int playerNr, int move, int x, int y) {
+    public static int checkLeft(byte[] field, int n, int playerNr, int move, int x, int y) {
         if (x >= 2 && field[move - 1] == 3 - playerNr) {
             for (int i = 2; i <= x; i++) {
                 int val = field[move - i];
                 if (val == 0) break;
                 if (val == playerNr) {
-                    return true;
+                    return i - 1;
                 }
             }
         }
-        return false;
+        return -1;
     }
 
-    public static boolean checkRight(byte[] field, int n, int playerNr, int move, int x, int y) {
+    public static int checkRight(byte[] field, int n, int playerNr, int move, int x, int y) {
         if (x < n - 2 && field[move + 1] == 3 - playerNr) {
             for (int i = 2; i + x < n; i++) {
                 int val = field[move + i];
                 if (val == 0) break;
                 if (val == playerNr) {
-                    return true;
+                    return i - 1;
                 }
             }
         }
-        return false;
+        return -1;
     }
 
-    public static boolean checkLeftBottom(byte[] field, int n, int playerNr, int move, int x, int y) {
+    public static int checkLeftBottom(byte[] field, int n, int playerNr, int move, int x, int y) {
         if (move + 2 * n < n * n && x >= 2 && field[move + n - 1] == 3 - playerNr) {
             for (int i = 2; i <= x && move + i * n < n * n; i++) {
                 int val = field[move + (n-1) * i];
                 if (val == 0) break;
                 if (val == playerNr) {
-                    return true;
+                    return i - 1;
                 }
             }
         }
-        return false;
+        return -1;
     }
 
-    public static boolean checkLeftTop(byte[] field, int n, int playerNr, int move, int x, int y) {
+    public static int checkLeftTop(byte[] field, int n, int playerNr, int move, int x, int y) {
         if (move - 2 * n >= 0 && x >= 2 && field[move - n - 1] == 3 - playerNr) {
             for (int i = 2; i <= x && move - i * n >= 0; i++) {
                 int val = field[move - (n+1) * i];
                 if (val == 0) break;
                 if (val == playerNr) {
-                    return true;
+                    return i - 1;
                 }
             }
         }
-        return false;
+        return -1;
     }
 
-    public static boolean checkRightTop(byte[] field, int n, int playerNr, int move, int x, int y) {
+    public static int checkRightTop(byte[] field, int n, int playerNr, int move, int x, int y) {
         if (move - 2 * n >= 0 && x < n - 2 && field[move - n + 1] == 3 - playerNr) {
             for (int i = 2; i + x < n && move - i * n >= 0; i++) {
                 int val = field[move + (1 - n) * i];
                 if (val == 0) break;
                 if (val == playerNr) {
-                    return true;
+                    return i - 1;
                 }
             }
         }
-        return false;
+        return -1;
     }
 
-    public static boolean checkRightBottom(byte[] field, int n, int playerNr, int move, int x, int y) {
+    public static int checkRightBottom(byte[] field, int n, int playerNr, int move, int x, int y) {
         if (move + 2 * n < n * n && x < n - 2 && field[move + n + 1] == 3 - playerNr) {
             for (int i = 2; i + x < n && move + i * n < n * n; i++) {
                 int val = field[move + (1 + n) * i];
                 if (val == 0) break;
                 if (val == playerNr) {
-                    return true;
+                    return i - 1;
                 }
             }
         }
-        return false;
+        return -1;
     }
 
 
@@ -183,14 +186,14 @@ public class Utils {
         fields[move] = playerNumber;
 
         int x = move % n, y = move / n;
-        if (Utils.checkBottom(fields, n, playerNumber, move, x, y)) moveFields(fields, playerNumber, move, n);
-        if (Utils.checkTop(fields, n, playerNumber, move, x, y)) moveFields(fields, playerNumber, move, -n);
-        if (Utils.checkLeft(fields, n, playerNumber, move, x, y)) moveFields(fields, playerNumber, move, -1);
-        if (Utils.checkRight(fields, n, playerNumber, move, x, y)) moveFields(fields, playerNumber, move, 1);
-        if (Utils.checkRightBottom(fields, n, playerNumber, move, x, y)) moveFields(fields, playerNumber, move, n+1);
-        if (Utils.checkLeftBottom(fields, n, playerNumber, move, x, y)) moveFields(fields, playerNumber, move, n-1);
-        if (Utils.checkRightTop(fields, n, playerNumber, move, x, y)) moveFields(fields, playerNumber, move, -n+1);
-        if (Utils.checkLeftTop(fields, n, playerNumber, move, x, y)) moveFields(fields, playerNumber, move, -n-1);
+        if (Utils.checkBottom(fields, n, playerNumber, move, x, y) > 0) moveFields(fields, playerNumber, move, n);
+        if (Utils.checkTop(fields, n, playerNumber, move, x, y) > 0) moveFields(fields, playerNumber, move, -n);
+        if (Utils.checkLeft(fields, n, playerNumber, move, x, y) > 0) moveFields(fields, playerNumber, move, -1);
+        if (Utils.checkRight(fields, n, playerNumber, move, x, y) > 0) moveFields(fields, playerNumber, move, 1);
+        if (Utils.checkRightBottom(fields, n, playerNumber, move, x, y) > 0) moveFields(fields, playerNumber, move, n+1);
+        if (Utils.checkLeftBottom(fields, n, playerNumber, move, x, y) > 0) moveFields(fields, playerNumber, move, n-1);
+        if (Utils.checkRightTop(fields, n, playerNumber, move, x, y) > 0) moveFields(fields, playerNumber, move, -n+1);
+        if (Utils.checkLeftTop(fields, n, playerNumber, move, x, y) > 0) moveFields(fields, playerNumber, move, -n-1);
     }
 
     private static void moveFields(byte[] fields, byte playerNumber, int move, int add) {
@@ -218,5 +221,21 @@ public class Utils {
         if (numberOfPawns[0] > numberOfPawns[1]) return 0;
         if (numberOfPawns[0] < numberOfPawns[1]) return 1;
         return 2;
+    }
+
+    public static int getChangedFields(byte[] field, int n, int playerNr, int move) {
+        int res = 0;
+
+        int x = move % n, y = move / n;
+        res += max(0, checkBottom(field, n, playerNr, move, x, y));
+        res += max(0, checkTop(field, n, playerNr, move, x, y));
+        res += max(0, checkLeft(field, n, playerNr, move, x, y));
+        res += max(0, checkRight(field, n, playerNr, move, x, y));
+        res += max(0, checkRightBottom(field, n, playerNr, move, x, y));
+        res += max(0, checkLeftBottom(field, n, playerNr, move, x, y));
+        res += max(0, checkRightTop(field, n, playerNr, move, x, y));
+        res += max(0, checkLeftTop(field, n, playerNr, move, x, y));
+
+        return res;
     }
 }
