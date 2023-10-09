@@ -22,19 +22,19 @@ public class AlphaBeta extends Algorithm {
     }
 
     MyPair minMax(Move m, int actDepth, int alpha, int beta, boolean isMax) {
-        long begin = System.nanoTime();
+//        long begin = System.nanoTime();
         int endAdvantage = heuristic.getEndAdvantage(m.field);
-        synchronized (STATISTICS_END_TIME_OBJ) {
-            STATISTICS_END_TIME += System.nanoTime() - begin;
-        }
+//        synchronized (STATISTICS_END_TIME_OBJ) {
+//            STATISTICS_END_TIME += System.nanoTime() - begin;
+//        }
         if (endAdvantage != 0) return new MyPair(m, endAdvantage, actDepth);
 
         if (actDepth == depth) {
-            long begin1 = System.nanoTime();
+//            long begin1 = System.nanoTime();
             int evaluation = heuristic.getEvaluation(m.field);
-            synchronized (STATISTICS_EVAL_TIME_OBJ) {
-                STATISTICS_EVAL_TIME += System.nanoTime() - begin1;
-            }
+//            synchronized (STATISTICS_EVAL_TIME_OBJ) {
+//                STATISTICS_EVAL_TIME += System.nanoTime() - begin1;
+//            }
             return new MyPair(m, evaluation);
         }
         int player = isMax ? playerNumber : 3 - playerNumber;
