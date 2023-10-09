@@ -16,12 +16,16 @@ public class SimpleHeuristic extends Heuristic {
         8-9. Number of squares 3x3 taken by player/opponent
         10-11. Number of whole lanes taken by player/opponent
         12-13. Maximum number of changed fields by 1 move of player/opponent
+        14-17. Number of player's fields minus nr of opponent's fields in distance from center (dist = 14 - nr)
      */
 
     public static int[] stages = {12, 30};
 
-    public static int coefficientAmount = 14;
+    public static int coefficientAmount = 18;
     public int[][] coefficients;
+
+    private static int[][] distanceFields = {{27,28,35,36}, {18,19,20,21,42,43,44,45,26,34,29,37}, {9,10,11,12,13,14,49,50,51,52,53,54,17,25,33,41,22,30,38,46},
+            {0,1,2,3,4,5,6,7,56,57,58,59,60,61,62,63,8,16,24,32,40,48,15,23,31,39,47,55}};
 
     public SimpleHeuristic(int playerNumber, int n) {
         this(playerNumber, n, new int[][]{
@@ -64,6 +68,7 @@ public class SimpleHeuristic extends Heuristic {
         int[] playersSquares3 = getPlayersSquares(field, playerNumber, 3);
         int[] playersLanes = getPlayersLanes(field, playerNumber);
         int[] playersMaxChangedFields = getMaxChangedFields(field, playerNumber);
+        int[] distanceFields = getDistanceFields(field, playerNumber);
 
         int res = playersMoves[0] * coefficients[stage][0]
                 + playersMoves[1] * coefficients[stage][1]
@@ -78,7 +83,11 @@ public class SimpleHeuristic extends Heuristic {
                 + playersLanes[0] * coefficients[stage][10]
                 + playersLanes[1] * coefficients[stage][11]
                 + playersMaxChangedFields[0] * coefficients[stage][12]
-                + playersMaxChangedFields[1] * coefficients[stage][13];
+                + playersMaxChangedFields[1] * coefficients[stage][13]
+                + distanceFields[0] * coefficients[stage][14]
+                + distanceFields[1] * coefficients[stage][15]
+                + distanceFields[2] * coefficients[stage][16]
+                + distanceFields[3] * coefficients[stage][17];
 
         return res;
     }
@@ -185,6 +194,17 @@ public class SimpleHeuristic extends Heuristic {
             res[0] = max(max1, res[0]);
             int max2 = Utils.getChangedFields(field, n, 3 - playerNumber, i);
             res[1] = max(max2, res[1]);
+        }
+        return res;
+    }
+
+    private int[] getDistanceFields(byte field[], int playerNumber) {
+        int[] res = new int[4];
+        for (int i = 0; i < 4; i++) {
+            for (int f : distanceFields[i]) {
+                if (field[f] == playerNumber) res[i]++;
+                else if (field[f] == 3 - playerNumber) res[i]--;
+            }
         }
         return res;
     }
