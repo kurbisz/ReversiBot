@@ -12,12 +12,12 @@ import java.util.concurrent.TimeUnit;
 
 public class GeneticTesting {
     public static void main(String[] args) {
-        if (args.length != 2) {
+        if (args.length != 3) {
             System.out.println("Wrong number of arguments!");
             return;
         }
 
-        int playerNumber, depth;
+        int playerNumber, depth, threads, loops;
         try {
             playerNumber = Integer.parseInt(args[0]);
         } catch (NumberFormatException e) {
@@ -30,10 +30,22 @@ public class GeneticTesting {
             System.out.println("Invalid depth number!");
             return;
         }
+        try {
+            threads = Integer.parseInt(args[2]);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid thread number!");
+            return;
+        }
+        try {
+            loops = Integer.parseInt(args[3]);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid loop number!");
+            return;
+        }
 
         try {
             GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm();
-            geneticAlgorithm.calculateForDepth(playerNumber, depth, true);
+            geneticAlgorithm.calculateForDepth(playerNumber, depth, threads, loops, true);
             System.out.println("DEPTH: " + depth);
             System.out.println("PLAYER: " + playerNumber);
             System.out.println("END TIME: " + AlphaBeta.STATISTICS_END_TIME);

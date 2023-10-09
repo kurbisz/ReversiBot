@@ -15,24 +15,22 @@ import java.util.stream.Collectors;
 public class GeneticAlgorithm {
 
     private String folderName = "results", lastFileName = "last-loop.txt";
-    private int n = 8, threads = 4;
+    private int n = 8;
     private int amount = 32, left = amount/4, crossover = amount/4, randoms = amount/4, loops = 100, fromCoefficient = -100000, toCoefficient = 100000;
     private Random r = new Random();
 
     public GeneticAlgorithm() {}
 
-    public GeneticAlgorithm(int n, int threads, int amount, int left, int randoms, int loops, int fromCoefficient, int toCoefficient) {
+    public GeneticAlgorithm(int n, int amount, int left, int randoms, int fromCoefficient, int toCoefficient) {
         this.n = n;
-        this.threads = threads;
         this.amount = amount;
         this.left = left;
         this.randoms = randoms;
-        this.loops = loops;
         this.fromCoefficient = fromCoefficient;
         this.toCoefficient = toCoefficient;
     }
 
-    public void calculateForDepth(int playerNumber, int depth, boolean loadProgress) throws InterruptedException {
+    public void calculateForDepth(int playerNumber, int depth, int threads, int loops, boolean loadProgress) throws InterruptedException {
         List<HeuristicData> list = new ArrayList<>();
 
         createResultsFolder();
