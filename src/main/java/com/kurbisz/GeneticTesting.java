@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 public class GeneticTesting {
     public static void main(String[] args) {
-        if (args.length != 3) {
+        if (args.length != 4) {
             System.out.println("Wrong number of arguments!");
             return;
         }
