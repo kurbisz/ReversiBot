@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
 public class GeneticAlgorithm {
 
     private String folderName = "results", lastFileName = "last-loop.txt";
-    private int n = 8;
-    private int amount = 32, left = 12, crossover = 8, randoms = 4, loops = 100, fromCoefficient = -100000, toCoefficient = 100000;
-    private Random r = new Random();
+    private static int n = 8, fromCoefficient = -100000, toCoefficient = 100000;
+    private int amount = 32, left = 12, crossover = 8, randoms = 4;
+    private static Random r = new Random();
 
     public GeneticAlgorithm() {}
 
@@ -153,7 +153,7 @@ public class GeneticAlgorithm {
         return 0;
     }
 
-    private HeuristicData getRandom(int playerNumber) {
+    public static HeuristicData getRandom(int playerNumber) {
         int coeff[][] = new int[SimpleHeuristic.stages.length+1][SimpleHeuristic.coefficientAmount];
         for (int stage = 0; stage <= SimpleHeuristic.stages.length; stage++) {
             for (int i = 0; i < SimpleHeuristic.coefficientAmount; i++) {
@@ -205,7 +205,7 @@ public class GeneticAlgorithm {
         return list.stream().limit(left).collect(Collectors.toList());
     }
 
-    private int getRandomNumber() {
+    private static int getRandomNumber() {
         return r.nextInt(toCoefficient - fromCoefficient) + fromCoefficient;
     }
 

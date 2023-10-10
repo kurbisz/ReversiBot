@@ -1,5 +1,8 @@
 package com.kurbisz;
 
+import com.kurbisz.genetics.HeuristicData;
+import com.kurbisz.heuristics.SimpleHeuristic;
+
 import java.util.Random;
 
 import static java.lang.Math.max;
