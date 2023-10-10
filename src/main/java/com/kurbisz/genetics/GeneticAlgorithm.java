@@ -78,9 +78,9 @@ public class GeneticAlgorithm {
                         BotPlayer player2 = new BotPlayer(3 - playerNumber, depth, heuristic2, false);
 
                         final GameServer gameServer = new GameServer(player1, player2);
-                        System.out.println("STARTED " + ii + " vs " + jj);
+//                        System.out.println("STARTED " + ii + " vs " + jj);
                         int res = gameServer.play();
-                        System.out.println("ENDED " + ii + " vs " + jj + ": " + res);
+//                        System.out.println("ENDED " + ii + " vs " + jj + ": " + res);
                         synchronized (sync) {
                             if (res == playerNumber) heuristicData1.wins++;
                             else if (res == 3 - playerNumber) heuristicData2.wins++;
