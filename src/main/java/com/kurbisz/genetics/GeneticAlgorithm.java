@@ -16,7 +16,7 @@ public class GeneticAlgorithm {
 
     private String folderName = "results", lastFileName = "last-loop.txt";
     private int n = 8;
-    private int amount = 32, left = amount/4, crossover = amount/4, randoms = amount/4, loops = 100, fromCoefficient = -100000, toCoefficient = 100000;
+    private int amount = 32, left = 12, crossover = 8, randoms = 4, loops = 100, fromCoefficient = -100000, toCoefficient = 100000;
     private Random r = new Random();
 
     public GeneticAlgorithm() {}
