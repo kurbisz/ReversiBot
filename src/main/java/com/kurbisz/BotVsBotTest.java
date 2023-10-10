@@ -7,25 +7,27 @@ import com.kurbisz.player.BotPlayer;
 public class BotVsBotTest {
     public static void main(String[] args) {
         int n = 8;
-        HeuristicData heuristicData = HeuristicData.fromString(1,n,"91557, -88672, -93415, 43108, -69685, 78212, -54469, -59169, -2894, -81361, -94956, -15182, -76663, -42337, -68407, 36827, 85412, 55737, \t\t67675, -91450, -90923, 12770, -65327, 91059, -31453, 39277, -2619, 18998, -59478, -63186, -21623, 2392, -99442, 12973, -49292, 9883, \t\t-38819, 63671, -69428, -93413, 9665, 50126, -53807, -71152, -95842, 81280, -84444, -75920, -96818, -36587, -90542, 5681, -13386, -88479, \t\t (4,37) - [34, 32, 30, 59, 62, 1, 24, 5, 19, 27, 25, 37, 26, 11, 28, 0, 18, 49, 43, 22, 12, 35, 47, 42, 63, 10, 2, 8, 3, 55, 33, 9, 50, 56, 31, 46, 58, 57, 6, 44, 16, 15, 29, 61, 13, 20, 36, 52, 39, 21, 7, 38, 4, 23, 41, 17, 54, 53, 60, 40, 14, 45, 48, 51]");
-        HeuristicData heuristicData2 = HeuristicData.fromString(2,n,"23390, 88315, 19937, -76835, 44356, 23910, -85582, 76842, 71486, -67378, -100099, -32616, 37638, -42337, -60250, 43134, 70060, -100081, 		88138, -73361, 107493, -26328, 45871, 70746, 65710, -83420, -32819, 69774, 28992, 57214, 7083, -27236, -24351, 112307, -21873, -108747, 		-21968, -38014, -53641, 28974, 627, 46249, -54616, 67078, -65885, 94921, -46411, 108269, -53438, -93441, 56923, -34397, -12519, -84119, 		 (3,37) - [46, 50, 6, 63, 43, 9, 30, 25, 59, 31, 60, 27, 49, 32, 7, 34, 62, 12, 10, 16, 23, 2, 51, 40, 56, 44, 4, 35, 5, 29, 17, 3, 37, 20, 57, 14, 58, 42, 41, 47, 36, 15, 53, 18, 52, 13, 61, 19, 11, 22, 28, 55, 54, 38, 48, 45, 21, 26, 33, 1, 8, 39, 24, 0]");
-        test(heuristicData.heuristic, heuristicData2.heuristic);
+        int depth = 3;
+        boolean logs = true;
+        HeuristicData heuristicData = HeuristicData.fromString(1,n,"32077, 45880, 36425, -65731, 68535, -58331, 7079, 7569, -97795, 89159, -67179, -93559, 10136, 54640, -58383, -37047, 79968, -70418, 		3723, 72625, 29979, 71566, 56384, -38033, 59110, 47042, -4681, 39982, 9278, 93981, 67256, 53868, 32236, -84422, 81316, 25577, 		74635, 88637, 83221, -5701, 7415, -75919, 73618, -65793, -38380, 24721, -76689, -72087, -31752, 72546, 93951, -28419, 46326, 15485, 		 (1,45) - [47, 16, 5, 38, 28, 15, 56, 46, 31, 25, 42, 7, 4, 10, 12, 2, 0, 52, 41, 36, 14, 18, 34, 43, 59, 51, 21, 22, 44, 9, 40, 60, 55, 45, 30, 20, 49, 6, 13, 8, 35, 1, 26, 39, 37, 61, 33, 58, 54, 57, 32, 11, 27, 23, 63, 53, 19, 48, 29, 17, 50, 62, 24, 3]");
+        HeuristicData heuristicData2 = HeuristicData.fromString(2,n,"50039, 45975, -25016, -54101, 68001, 1188, 61656, -25880, -3975, -27597, 93547, 73802, -5400, -32474, 26218, 32827, -66150, -57086, \t\t7311, -40286, 81790, -60506, -91736, 45473, 51226, 38041, -20725, 57975, 40648, -5572, 4375, -80060, -39408, -9442, 4962, 42925, \t\t-96477, 12078, -30908, -89898, -61006, 94155, -91201, 28876, 97129, 52408, 32010, 15301, -30772, 76139, 63800, 68542, 14380, 72068, \t\t (1,45) - [29, 23, 62, 5, 60, 27, 46, 53, 42, 37, 63, 30, 32, 47, 3, 1, 57, 61, 43, 8, 19, 48, 26, 59, 21, 17, 31, 12, 50, 58, 4, 39, 38, 7, 34, 56, 51, 0, 15, 25, 22, 41, 44, 9, 24, 18, 14, 55, 40, 33, 11, 45, 10, 35, 28, 16, 36, 20, 6, 49, 54, 13, 52, 2]");
+        test(heuristicData.heuristic, heuristicData2.heuristic, depth, logs);
     }
 
-    private static void test(SimpleHeuristic simpleHeuristic1, SimpleHeuristic simpleHeuristic2) {
+    private static void test(SimpleHeuristic simpleHeuristic1, SimpleHeuristic simpleHeuristic2, int depth, boolean logs) {
         simpleHeuristic1.playerNumber = 1;
-        BotPlayer botPlayer1 = new BotPlayer(1, 3, simpleHeuristic1, false);
+        BotPlayer botPlayer1 = new BotPlayer(1, depth, simpleHeuristic1, logs);
         simpleHeuristic2.playerNumber = 2;
-        BotPlayer botPlayer2 = new BotPlayer(2, 3, simpleHeuristic2, false);
+        BotPlayer botPlayer2 = new BotPlayer(2, depth, simpleHeuristic2, logs);
         GameServer gameServer = new GameServer(botPlayer1, botPlayer2);
         int res = gameServer.play();
         System.out.println("bot 1 vs bot 2: " + res);
 
 
         simpleHeuristic1.playerNumber = 2;
-        botPlayer1 = new BotPlayer(2, 3, simpleHeuristic1, false);
+        botPlayer1 = new BotPlayer(2, depth, simpleHeuristic1, logs);
         simpleHeuristic2.playerNumber = 1;
-        botPlayer2 = new BotPlayer(1, 3, simpleHeuristic2, false);
+        botPlayer2 = new BotPlayer(1, depth, simpleHeuristic2, logs);
         gameServer = new GameServer(botPlayer2, botPlayer1);
         res = gameServer.play();
         System.out.println("bot 2 vs bot 1: " + res);

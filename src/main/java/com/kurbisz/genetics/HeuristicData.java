@@ -7,6 +7,7 @@ import java.util.Arrays;
 public class HeuristicData implements Comparable<HeuristicData> {
     public SimpleHeuristic heuristic;
     public Integer wins = 0, rounds = 0;
+    public Integer id = -1;
 
     public HeuristicData(SimpleHeuristic heuristic) {
         this.heuristic = heuristic;
