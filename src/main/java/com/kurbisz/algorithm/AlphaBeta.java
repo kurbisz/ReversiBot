@@ -44,7 +44,7 @@ public class AlphaBeta extends Algorithm {
         int startBeta = beta;
         List<Move> children = getChildren(m, player);
         if (children.isEmpty()) {
-            return minMax(m, actDepth, alpha, beta, !isMax);
+            return minMax(m, actDepth + 1, alpha, beta, !isMax);
         }
         for (Move move : children) {
 //            if (actDepth == 0) {

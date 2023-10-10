@@ -4,7 +4,7 @@ import com.kurbisz.heuristics.SimpleHeuristic;
 
 import java.util.Arrays;
 
-class HeuristicData implements Comparable<HeuristicData> {
+public class HeuristicData implements Comparable<HeuristicData> {
     public SimpleHeuristic heuristic;
     public Integer wins = 0, rounds = 0;
 
