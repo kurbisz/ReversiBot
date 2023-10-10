@@ -17,11 +17,12 @@ public class SimpleHeuristic extends Heuristic {
         10-11. Number of whole lanes taken by player/opponent
         12-13. Maximum number of changed fields by 1 move of player/opponent
         14-17. Number of player's fields minus nr of opponent's fields in distance from center (dist = 14 - nr)
+        18-19. Number of fields which are adjacent to corner on diagonal.
      */
 
     public static int[] stages = {12, 30};
 
-    public static int coefficientAmount = 18;
+    public static int coefficientAmount = 20;
     public int[][] coefficients;
 
     private static int[][] distanceFields = {{27,28,35,36}, {18,19,20,21,42,43,44,45,26,34,29,37}, {9,10,11,12,13,14,49,50,51,52,53,54,17,25,33,41,22,30,38,46},
@@ -29,9 +30,9 @@ public class SimpleHeuristic extends Heuristic {
 
     public SimpleHeuristic(int playerNumber, int n) {
         this(playerNumber, n, new int[][]{
-                new int[]{1000, -1000, 5000, -5000, 20000, -20000, 0, 0, 0, 0, 0, 0, 0, 0},
-                new int[]{1000, -1000, 5000, -5000, 20000, -20000, 0, 0, 0, 0, 0, 0, 0, 0},
-                new int[]{1000, -1000, 5000, -5000, 20000, -20000, 0, 0, 0, 0, 0, 0, 0, 0}}, null);
+                new int[]{1000, -1000, 5000, -5000, 20000, -20000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                new int[]{1000, -1000, 5000, -5000, 20000, -20000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                new int[]{1000, -1000, 5000, -5000, 20000, -20000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}}, null);
     }
 
 
@@ -69,6 +70,7 @@ public class SimpleHeuristic extends Heuristic {
         int[] playersLanes = getPlayersLanes(field, playerNumber);
         int[] playersMaxChangedFields = getMaxChangedFields(field, playerNumber);
         int[] distanceFields = getDistanceFields(field, playerNumber);
+        int[] playersSecondCorners = getPlayersSecondCorners(field, playerNumber);
 
         int res = playersMoves[0] * coefficients[stage][0]
                 + playersMoves[1] * coefficients[stage][1]
@@ -87,7 +89,9 @@ public class SimpleHeuristic extends Heuristic {
                 + distanceFields[0] * coefficients[stage][14]
                 + distanceFields[1] * coefficients[stage][15]
                 + distanceFields[2] * coefficients[stage][16]
-                + distanceFields[3] * coefficients[stage][17];
+                + distanceFields[3] * coefficients[stage][17]
+                + playersSecondCorners[0] * coefficients[stage][18]
+                + playersSecondCorners[1] * coefficients[stage][19];
 
         return res;
     }
@@ -124,6 +128,24 @@ public class SimpleHeuristic extends Heuristic {
 
         if (field[n*n-1] == playerNumber) res[0]++;
         else if (field[n*n-1] == 3 - playerNumber) res[1]++;
+
+        return res;
+    }
+
+    private int[] getPlayersSecondCorners(byte field[], int playerNumber) {
+        int[] res = new int[2];
+
+        if (field[n+1] == playerNumber) res[0]++;
+        else if (field[n+1] == 3 - playerNumber) res[1]++;
+
+        if (field[2*n-2] == playerNumber) res[0]++;
+        else if (field[2*n-2] == 3 - playerNumber) res[1]++;
+
+        if (field[n*(n-2)+1] == playerNumber) res[0]++;
+        else if (field[n*(n-2)+1] == 3 - playerNumber) res[1]++;
+
+        if (field[n*(n-1)-2] == playerNumber) res[0]++;
+        else if (field[n*(n-1)-2] == 3 - playerNumber) res[1]++;
 
         return res;
     }
