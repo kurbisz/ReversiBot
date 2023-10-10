@@ -167,12 +167,16 @@ public class GeneticAlgorithm {
 
     private HeuristicData getMutated(List<HeuristicData> list) {
         SimpleHeuristic heuristic1 = list.get(r.nextInt(list.size())).heuristic;
-        double diff = 0.2;
+        double diff = 0.05;
+        double changeValChance = 0.1;
 
         int coeff[][] = new int[SimpleHeuristic.stages.length + 1][SimpleHeuristic.coefficientAmount];
         for (int stage = 0; stage <= SimpleHeuristic.stages.length; stage++) {
             for (int i = 0; i < SimpleHeuristic.coefficientAmount; i++) {
                 coeff[stage][i] = getRandomCoefficient(heuristic1.coefficients[stage][i], diff);
+                if (r.nextDouble() < changeValChance) {
+                    coeff[stage][i] = getRandomNumber();
+                }
             }
         }
 
