@@ -1,6 +1,7 @@
 package com.kurbisz.genetics;
 
 import com.kurbisz.GameServer;
+import com.kurbisz.heuristics.Heuristic;
 import com.kurbisz.heuristics.SimpleHeuristic;
 import com.kurbisz.Utils;
 import com.kurbisz.player.BotPlayer;
@@ -10,6 +11,7 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class GeneticAlgorithm {
@@ -17,6 +19,7 @@ public class GeneticAlgorithm {
     private String folderName = "results", lastFileName = "last-loop.txt";
     private static int n = 8, fromCoefficient = -100000, toCoefficient = 100000;
     private int amount = 32, left = 12, crossover = 8, randoms = 4;
+//    private int amount = 64, left = 24, crossover = 12, randoms = 16;
     private static Random r = new Random();
 
     public GeneticAlgorithm() {}
@@ -38,8 +41,12 @@ public class GeneticAlgorithm {
         int startLoop = 0;
         if (loadProgress) startLoop = readFromLastFile(playerNumber, list);
 
+        int act = 0;
         while (list.size() < amount) {
-            list.add(getRandom(playerNumber));
+            HeuristicData rand = getRandom(playerNumber);
+            rand.id = act;
+            list.add(rand);
+            act++;
         }
 
         for (int nr = 0; nr < loops; nr++) {
@@ -55,18 +62,25 @@ public class GeneticAlgorithm {
                 for (int j = 0; j < amount; j++) {
                     HeuristicData heuristicData1 = list.get(j);
                     heuristicData1.heuristic.playerNumber = playerNumber;
-                    BotPlayer player1 = new BotPlayer(playerNumber, depth, heuristicData1.heuristic, false);
+                    Heuristic heuristic1 = heuristicData1.heuristic.clone();
 
                     HeuristicData heuristicData2 = list.get((j + i) % amount);
                     heuristicData2.heuristic.playerNumber = 3 - playerNumber;
-                    BotPlayer player2 = new BotPlayer(3 - playerNumber, depth, heuristicData1.heuristic, false);
+                    Heuristic heuristic2 = heuristicData2.heuristic.clone();
 
-                    final GameServer gameServer = new GameServer(player1, player2);
-
-                    final int ii = i, jj = j;
+//                    int res = gameServer.play();
+//                    if (res == playerNumber) heuristicData1.wins++;
+//                    else if (res == 3 - playerNumber) heuristicData2.wins++;
+                    final int ii = j, jj = (j + i) % amount;
                     Runnable runnable = () -> {
+                        BotPlayer player1 = new BotPlayer(playerNumber, depth, heuristic1, false);
+
+                        BotPlayer player2 = new BotPlayer(3 - playerNumber, depth, heuristic2, false);
+
+                        final GameServer gameServer = new GameServer(player1, player2);
+                        System.out.println("STARTED " + ii + " vs " + jj);
                         int res = gameServer.play();
-                        System.out.println("ENDED " + ii + " vs " + jj);
+                        System.out.println("ENDED " + ii + " vs " + jj + ": " + res);
                         synchronized (sync) {
                             if (res == playerNumber) heuristicData1.wins++;
                             else if (res == 3 - playerNumber) heuristicData2.wins++;

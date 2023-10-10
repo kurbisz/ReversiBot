@@ -32,4 +32,7 @@ public abstract class Heuristic {
         if (winner == playerNumber + 1) return Integer.MAX_VALUE;
         return Integer.MIN_VALUE;
     }
+
+    public abstract Heuristic clone();
+
 }

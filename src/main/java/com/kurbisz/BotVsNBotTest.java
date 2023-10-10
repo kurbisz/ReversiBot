@@ -11,7 +11,7 @@ public class BotVsNBotTest {
 
     public static void main(String[] args) {
         int n = 8, depth = 3;
-        HeuristicData heuristicData = HeuristicData.fromString(1,n,"91557, -88672, -93415, 43108, -69685, 78212, -54469, -59169, -2894, -81361, -94956, -15182, -76663, -42337, -68407, 36827, 85412, 55737, \t\t67675, -91450, -90923, 12770, -65327, 91059, -31453, 39277, -2619, 18998, -59478, -63186, -21623, 2392, -99442, 12973, -49292, 9883, \t\t-38819, 63671, -69428, -93413, 9665, 50126, -53807, -71152, -95842, 81280, -84444, -75920, -96818, -36587, -90542, 5681, -13386, -88479, \t\t (4,37) - [34, 32, 30, 59, 62, 1, 24, 5, 19, 27, 25, 37, 26, 11, 28, 0, 18, 49, 43, 22, 12, 35, 47, 42, 63, 10, 2, 8, 3, 55, 33, 9, 50, 56, 31, 46, 58, 57, 6, 44, 16, 15, 29, 61, 13, 20, 36, 52, 39, 21, 7, 38, 4, 23, 41, 17, 54, 53, 60, 40, 14, 45, 48, 51]");
+        HeuristicData heuristicData = HeuristicData.fromString(1,n,"82716, 84875, 76523, 21644, -903, 69339, -83659, -66763, 56386, -48045, 56564, 10376, -66873, -65773, -47031, -763, 44692, -34096, \t\t-52800, -8369, 57058, 50459, 25623, -71161, -99741, -24308, 92573, -84282, 17340, -86069, -13706, 86966, -82033, 65210, 59707, -93554, \t\t18101, -98174, -39618, 38760, -10805, -32327, 34091, 18688, 44516, 24621, 68105, -26549, 95452, 16400, 33824, 38322, 65292, -79872, \t\t (25,72) - [59, 17, 49, 42, 30, 11, 60, 45, 51, 35, 29, 33, 62, 44, 10, 0, 52, 41, 9, 46, 34, 20, 61, 5, 39, 36, 31, 32, 15, 21, 4, 28, 24, 16, 54, 14, 12, 7, 38, 2, 26, 3, 47, 58, 22, 55, 27, 37, 50, 40, 8, 25, 23, 43, 57, 1, 18, 48, 53, 19, 56, 63, 13, 6]");
         test(heuristicData, depth);
     }
 
@@ -21,7 +21,7 @@ public class BotVsNBotTest {
         for (int i = 0; i < nr; i++) {
             BotPlayer botPlayer1 = new BotPlayer(1, depth, heuristicData.heuristic, false);
             HeuristicData heuristicData2 = GeneticAlgorithm.getRandom(2);
-            BotPlayer botPlayer2 = new BotPlayer(2, 3, heuristicData2.heuristic, false);
+            BotPlayer botPlayer2 = new BotPlayer(2, depth, heuristicData2.heuristic, false);
             GameServer gameServer = new GameServer(botPlayer1, botPlayer2);
             int res = gameServer.play();
             if (res == 1) wins++;
@@ -33,7 +33,7 @@ public class BotVsNBotTest {
         for (int i = 0; i < nr; i++) {
             BotPlayer botPlayer1 = new BotPlayer(2, depth, heuristicData.heuristic, false);
             HeuristicData heuristicData2 = GeneticAlgorithm.getRandom(1);
-            BotPlayer botPlayer2 = new BotPlayer(1, 3, heuristicData2.heuristic, false);
+            BotPlayer botPlayer2 = new BotPlayer(1, depth, heuristicData2.heuristic, false);
             GameServer gameServer = new GameServer(botPlayer2, botPlayer1);
             int res = gameServer.play();
             if (res == 2) wins++;

@@ -209,5 +209,8 @@ public class SimpleHeuristic extends Heuristic {
         return res;
     }
 
-
+    @Override
+    public Heuristic clone() {
+        return new SimpleHeuristic(playerNumber, n, coefficients, randomArr);
+    }
 }
