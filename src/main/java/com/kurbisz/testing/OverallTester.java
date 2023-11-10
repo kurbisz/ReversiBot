@@ -60,7 +60,7 @@ public class OverallTester {
         }
 
         exec.shutdown();
-        exec.awaitTermination(1, TimeUnit.DAYS);
+        exec.awaitTermination(100, TimeUnit.DAYS);
 
         try {
             PrintWriter outWriter = new PrintWriter(folderName + File.separator + "output-" + depth + ".txt", "UTF-8");
