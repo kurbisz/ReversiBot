@@ -13,7 +13,7 @@ public class OverallTesting {
             return;
         }
 
-        for (int depth = 3; depth < 20; depth++) {
+        for (int depth = 10; depth < 20; depth++) {
             int threads;
 
             try {
