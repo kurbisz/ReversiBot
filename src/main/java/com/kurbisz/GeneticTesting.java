@@ -49,13 +49,13 @@ public class GeneticTesting {
             geneticAlgorithm.calculateForDepth(playerNumber, depth, threads, loops, true);
             System.out.println("TOTAL_AM: " + AlphaBeta.TOTAL_AM);
             System.out.println("ZERO_AM: " + AlphaBeta.ZERO_AM);
-            System.out.println("ZERO_AM 2: " + AlphaBeta.ZERO_AM / AlphaBeta.TOTAL_AM);
+            System.out.println("ZERO_AM 2: " + (double) AlphaBeta.ZERO_AM / AlphaBeta.TOTAL_AM);
             System.out.println("CHILDREN_AM: " + AlphaBeta.CHILDREN_AM);
-            System.out.println("CHILDREN_AM 2: " + AlphaBeta.CHILDREN_AM / AlphaBeta.TOTAL_AM);
+            System.out.println("CHILDREN_AM 2: " + (double) AlphaBeta.CHILDREN_AM / AlphaBeta.TOTAL_AM);
             System.out.println("MAX_AM: " + AlphaBeta.MAX_AM);
             System.out.println("GAME_AM: " + GameServer.GAME_AM);
             System.out.println("GAME_LENGTH: " + GameServer.GAME_LENGTH);
-            System.out.println("GAME_LENGTH 2: " + GameServer.GAME_LENGTH / GameServer.GAME_AM);
+            System.out.println("GAME_LENGTH 2: " + (double) GameServer.GAME_LENGTH / GameServer.GAME_AM);
             System.out.println("MIN_GAME_LENGTH: " + GameServer.MIN_GAME_LENGTH);
             System.out.println("MAX_GAME_LENGTH: " + GameServer.MAX_GAME_LENGTH);
 
