@@ -7,9 +7,7 @@ import java.util.*;
 
 public class AlphaBeta extends Algorithm {
 
-    private static Object STATISTICS_END_TIME_OBJ = new Object(), STATISTICS_EVAL_TIME_OBJ = new Object();
-    public static long STATISTICS_END_TIME = 0, STATISTICS_EVAL_TIME = 0;
-
+    public static long TOTAL_AM = 0, CHILDREN_AM = 0, ZERO_AM = 0, MAX_AM = 0;
 
     public AlphaBeta(int n, int playerNumber, int depth, Heuristic heuristic) {
         super(n, playerNumber, depth, heuristic);
@@ -22,19 +20,11 @@ public class AlphaBeta extends Algorithm {
     }
 
     MyPair minMax(Move m, int actDepth, int alpha, int beta, boolean isMax) {
-//        long begin = System.nanoTime();
         int endAdvantage = heuristic.getEndAdvantage(m.field);
-//        synchronized (STATISTICS_END_TIME_OBJ) {
-//            STATISTICS_END_TIME += System.nanoTime() - begin;
-//        }
         if (endAdvantage != 0) return new MyPair(m, endAdvantage, actDepth);
 
         if (actDepth == depth) {
-//            long begin1 = System.nanoTime();
             int evaluation = heuristic.getEvaluation(m.field);
-//            synchronized (STATISTICS_EVAL_TIME_OBJ) {
-//                STATISTICS_EVAL_TIME += System.nanoTime() - begin1;
-//            }
             return new MyPair(m, evaluation);
         }
         int player = isMax ? playerNumber : 3 - playerNumber;
@@ -43,13 +33,17 @@ public class AlphaBeta extends Algorithm {
         int startAlpha = alpha;
         int startBeta = beta;
         List<Move> children = getChildren(m, player);
+        TOTAL_AM++;
+        int size = children.size();
+        if (size == 0) ZERO_AM++;
+        CHILDREN_AM += size;
+        MAX_AM = size > MAX_AM ? size : MAX_AM;
+
         if (children.isEmpty()) {
             return minMax(m, actDepth + 1, alpha, beta, !isMax);
         }
         for (Move move : children) {
-//            if (actDepth == 0) {
-//                System.out.println("TEST: " + Utils.toNormalMove(move.lastMove, n));
-//            }
+
             MyPair myPair = minMax(move, actDepth + 1, startAlpha, startBeta, !isMax);
 
             if (best == null || (isMax && myPair.eval > actBest) || (!isMax && myPair.eval < actBest)){

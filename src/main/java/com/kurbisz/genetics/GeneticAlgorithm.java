@@ -229,7 +229,7 @@ public class GeneticAlgorithm {
     }
 
     private int getRandomCoefficient(int coefficient, double diff) {
-        int res = (int) (coefficient * getRandomMultiplier(diff)) + (int) (toCoefficient * getRandomMultiplier(diff)/10 * ((r.nextBoolean()) ? -1 : 1));
+        int res = (int) (coefficient * getRandomMultiplier(diff)) + (int) (toCoefficient * getRandomMultiplier(0.5)/100 * ((r.nextBoolean()) ? -1 : 1));
         res = Math.max(res, 10*fromCoefficient);
         res = Math.min(res, 10*toCoefficient);
         return res;

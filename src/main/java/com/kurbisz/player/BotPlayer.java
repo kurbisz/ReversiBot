@@ -7,8 +7,6 @@ import com.kurbisz.heuristics.Heuristic;
 
 public class BotPlayer extends Player {
 
-    private static Object STATISTICS_OVERALL_TIME_OBJ = new Object();
-    public static long STATISTICS_OVERALL_TIME = 0;
 
     private int depth;
     private Heuristic heuristic;

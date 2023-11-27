@@ -24,7 +24,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.kurbisz.OverallTesting</mainClass>
+                            <mainClass>com.kurbisz.GeneticTesting</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

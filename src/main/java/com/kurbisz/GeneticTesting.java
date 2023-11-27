@@ -44,13 +44,21 @@ public class GeneticTesting {
         }
 
         try {
+            System.out.println("DEPTH: " + depth);
             GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm();
             geneticAlgorithm.calculateForDepth(playerNumber, depth, threads, loops, true);
-            System.out.println("DEPTH: " + depth);
-            System.out.println("PLAYER: " + playerNumber);
-            System.out.println("END TIME: " + AlphaBeta.STATISTICS_END_TIME);
-            System.out.println("EVAL TIME: " + AlphaBeta.STATISTICS_EVAL_TIME);
-            System.out.println("OVERALL TIME: " + BotPlayer.STATISTICS_OVERALL_TIME);
+            System.out.println("TOTAL_AM: " + AlphaBeta.TOTAL_AM);
+            System.out.println("ZERO_AM: " + AlphaBeta.ZERO_AM);
+            System.out.println("ZERO_AM 2: " + AlphaBeta.ZERO_AM / AlphaBeta.TOTAL_AM);
+            System.out.println("CHILDREN_AM: " + AlphaBeta.CHILDREN_AM);
+            System.out.println("CHILDREN_AM 2: " + AlphaBeta.CHILDREN_AM / AlphaBeta.TOTAL_AM);
+            System.out.println("MAX_AM: " + AlphaBeta.MAX_AM);
+            System.out.println("GAME_AM: " + GameServer.GAME_AM);
+            System.out.println("GAME_LENGTH: " + GameServer.GAME_LENGTH);
+            System.out.println("GAME_LENGTH 2: " + GameServer.GAME_LENGTH / GameServer.GAME_AM);
+            System.out.println("MIN_GAME_LENGTH: " + GameServer.MIN_GAME_LENGTH);
+            System.out.println("MAX_GAME_LENGTH: " + GameServer.MAX_GAME_LENGTH);
+
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -58,5 +66,4 @@ public class GeneticTesting {
         }
     }
 
-    // Coefficients: -63401 -62707 -80251 86149 44065 (9) for depth = 4 and player = 2
 }

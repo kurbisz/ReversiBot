@@ -4,6 +4,9 @@ import com.kurbisz.player.Player;
 
 public class GameServer {
 
+
+    public static long GAME_AM = 0, GAME_LENGTH = 0, MIN_GAME_LENGTH = 64, MAX_GAME_LENGTH = 0;
+
     private static boolean logs = false;
 
     // players[0] - white, players[1] - black
@@ -35,6 +38,11 @@ public class GameServer {
             board.move(move, (byte) (actualPlayer + 1));
             actualPlayer = (byte) (1 - actualPlayer);
         }
+        GAME_AM++;
+        int moves = board.getMoves();
+        GAME_LENGTH += moves;
+        MAX_GAME_LENGTH = moves > MAX_GAME_LENGTH ? moves : MAX_GAME_LENGTH;
+        MIN_GAME_LENGTH = moves < MIN_GAME_LENGTH ? moves : MIN_GAME_LENGTH;
         int winner = Utils.getWinner(board.fields, n);
         if (logs) {
             if (winner == 2) System.out.println("DRAW");
