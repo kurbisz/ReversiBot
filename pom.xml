@@ -24,7 +24,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.kurbisz.GeneticTesting</mainClass>
+                            <mainClass>com.kurbisz.NBotVsNBotTest</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
