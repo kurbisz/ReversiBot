@@ -2,14 +2,6 @@ package com.kurbisz;
 
 import com.kurbisz.algorithm.AlphaBeta;
 import com.kurbisz.genetics.GeneticAlgorithm;
-import com.kurbisz.heuristics.SimpleHeuristic;
-import com.kurbisz.player.BotPlayer;
-
-import java.io.IOException;
-import java.util.Random;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 public class GeneticTesting {
     public static void main(String[] args) {
@@ -69,7 +61,7 @@ public class GeneticTesting {
             System.out.println("GAME_LENGTH: " + GameServer.GAME_LENGTH);
             System.out.println("GAME_LENGTH 2: " + (double) GameServer.GAME_LENGTH / GameServer.GAME_AM);
             System.out.println("MIN_GAME_LENGTH: " + GameServer.MIN_GAME_LENGTH);
-            System.out.println("MAX_GAME_LENGTH: " + GameServer.MAX_GAME_LENGTH);
+            System.out.println("MAX_GAME_LENGTH_AM: " + GameServer.MAX_GAME_LENGTH_AM);
 
 
         } catch (InterruptedException e) {

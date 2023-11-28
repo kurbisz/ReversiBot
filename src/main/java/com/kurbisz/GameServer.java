@@ -5,7 +5,7 @@ import com.kurbisz.player.Player;
 public class GameServer {
 
 
-    public static long GAME_AM = 0, GAME_LENGTH = 0, MIN_GAME_LENGTH = 64, MAX_GAME_LENGTH = 0;
+    public static long GAME_AM = 0, GAME_LENGTH = 0, MIN_GAME_LENGTH = 64, MAX_GAME_LENGTH_AM = 0;
 
     private static boolean logs = false;
 
@@ -41,7 +41,7 @@ public class GameServer {
         GAME_AM++;
         int moves = board.getMoves();
         GAME_LENGTH += moves;
-        MAX_GAME_LENGTH = moves > MAX_GAME_LENGTH ? moves : MAX_GAME_LENGTH;
+        if (moves == 60) MAX_GAME_LENGTH_AM++;
         MIN_GAME_LENGTH = moves < MIN_GAME_LENGTH ? moves : MIN_GAME_LENGTH;
         int winner = Utils.getWinner(board.fields, n);
         if (logs) {
