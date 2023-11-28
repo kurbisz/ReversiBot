@@ -2,12 +2,14 @@ package com.kurbisz.algorithm;
 
 import com.kurbisz.Move;
 import com.kurbisz.heuristics.Heuristic;
+import com.kurbisz.heuristics.SimpleHeuristic;
 
 import java.util.*;
 
 public class AlphaBeta extends Algorithm {
 
     public static long TOTAL_AM = 0, CHILDREN_AM = 0, ZERO_AM = 0, MAX_AM = 0;
+    public static long[] TOTAL_AM_PARTS = {0,0,0}, CHILDREN_AM_PARTS = {0,0,0}, ZERO_AM_PARTS = {0,0,0};
 
     public AlphaBeta(int n, int playerNumber, int depth, Heuristic heuristic) {
         super(n, playerNumber, depth, heuristic);
@@ -33,10 +35,22 @@ public class AlphaBeta extends Algorithm {
         int startAlpha = alpha;
         int startBeta = beta;
         List<Move> children = getChildren(m, player);
+        int moveNr = m.getMoves();
+        int stage = 0;
+        for (int i = 0; i < SimpleHeuristic.stages.length; i++) {
+            if (moveNr >= SimpleHeuristic.stages[i]) {
+                stage = i+1;
+            }
+        }
+        TOTAL_AM_PARTS[stage]++;
         TOTAL_AM++;
         int size = children.size();
-        if (size == 0) ZERO_AM++;
+        if (size == 0) {
+            ZERO_AM++;
+            ZERO_AM_PARTS[stage]++;
+        }
         CHILDREN_AM += size;
+        CHILDREN_AM_PARTS[stage] += size;
         MAX_AM = size > MAX_AM ? size : MAX_AM;
 
         if (children.isEmpty()) {

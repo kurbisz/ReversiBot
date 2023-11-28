@@ -2,6 +2,7 @@ package com.kurbisz;
 
 import com.kurbisz.algorithm.AlphaBeta;
 import com.kurbisz.genetics.GeneticAlgorithm;
+import com.kurbisz.heuristics.SimpleHeuristic;
 import com.kurbisz.player.BotPlayer;
 
 import java.io.IOException;
@@ -48,10 +49,21 @@ public class GeneticTesting {
             GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm();
             geneticAlgorithm.calculateForDepth(playerNumber, depth, threads, loops, true);
             System.out.println("TOTAL_AM: " + AlphaBeta.TOTAL_AM);
+            for (int i = 0; i < 3; i++) {
+                System.out.println("\tTOTAL_AM_PART: " + i + "\t" + AlphaBeta.TOTAL_AM_PARTS[i]);
+            }
             System.out.println("ZERO_AM: " + AlphaBeta.ZERO_AM);
             System.out.println("ZERO_AM 2: " + (double) AlphaBeta.ZERO_AM / AlphaBeta.TOTAL_AM);
+            for (int i = 0; i < 3; i++) {
+                System.out.println("\tZERO_AM_PART: " + i + "\t" + AlphaBeta.ZERO_AM_PARTS[i]);
+                System.out.println("\tZERO_AM_PART 2: " + i + "\t" + (double) AlphaBeta.ZERO_AM_PARTS[i] / AlphaBeta.TOTAL_AM_PARTS[i]);
+            }
             System.out.println("CHILDREN_AM: " + AlphaBeta.CHILDREN_AM);
             System.out.println("CHILDREN_AM 2: " + (double) AlphaBeta.CHILDREN_AM / AlphaBeta.TOTAL_AM);
+            for (int i = 0; i < 3; i++) {
+                System.out.println("\tCHILDREN_AM_PART: " + i + "\t" + AlphaBeta.CHILDREN_AM_PARTS[i]);
+                System.out.println("\tCHILDREN_AM_PART 2: " + i + "\t" + (double) AlphaBeta.CHILDREN_AM_PARTS[i] / AlphaBeta.TOTAL_AM_PARTS[i]);
+            }
             System.out.println("MAX_AM: " + AlphaBeta.MAX_AM);
             System.out.println("GAME_AM: " + GameServer.GAME_AM);
             System.out.println("GAME_LENGTH: " + GameServer.GAME_LENGTH);
