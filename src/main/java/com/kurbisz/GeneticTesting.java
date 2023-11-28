@@ -62,6 +62,7 @@ public class GeneticTesting {
             System.out.println("GAME_LENGTH 2: " + (double) GameServer.GAME_LENGTH / GameServer.GAME_AM);
             System.out.println("MIN_GAME_LENGTH: " + GameServer.MIN_GAME_LENGTH);
             System.out.println("MAX_GAME_LENGTH_AM: " + GameServer.MAX_GAME_LENGTH_AM);
+            System.out.println("MAX_GAME_LENGTH_AM 2: " + (double) GameServer.MAX_GAME_LENGTH_AM / GameServer.GAME_AM);
 
 
         } catch (InterruptedException e) {
