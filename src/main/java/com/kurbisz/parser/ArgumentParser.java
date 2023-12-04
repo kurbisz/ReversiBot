@@ -81,10 +81,10 @@ public class ArgumentParser {
      */
     private void printHelp() throws ParserException {
         System.out.println("List of all available commands:");
-        System.out.println("\tpvp - play game player vs player");
-        System.out.println("\tpvc <DEPTH> - play game player vs random bot with specified depth");
-        System.out.println("\tpvc <DEPTH1> <DEPTH2> - play game with 2 bots with given depth");
-        System.out.println("\tgenetic <DEPTH> <THREADS> <LOOPS> - run genetic algorithm with given parameters");
+        System.out.println("  pvp - play game player vs player");
+        System.out.println("  pvc <DEPTH> - play game player vs random bot with specified depth");
+        System.out.println("  cvc <DEPTH1> <DEPTH2> - play game with 2 bots with given depth");
+        System.out.println("  genetic <DEPTH> <THREADS> <LOOPS> - run genetic algorithm with given parameters");
         throw new ParserException();
     }
 
