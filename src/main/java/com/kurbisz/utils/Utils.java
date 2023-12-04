@@ -1,15 +1,23 @@
-package com.kurbisz;
-
-import com.kurbisz.genetics.HeuristicData;
-import com.kurbisz.heuristics.SimpleHeuristic;
+package com.kurbisz.utils;
 
 import java.util.Random;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-public class Utils {
+/**
+ * Static class with all operations connected to executing moves or checking properties on board.
+ */
+public final class Utils {
 
+    /**
+     * Checking if given move is valid on defined board.
+     * @param field board in array format
+     * @param n board size (default 8)
+     * @param playerNr number of player to move
+     * @param move index number of move
+     * @return
+     */
     public static boolean isValidMove(byte[] field, int n, int playerNr, int move) {
         if (field[move] != 0) return false;
 
@@ -26,6 +34,16 @@ public class Utils {
         return false;
     }
 
+    /**
+     * Checking if given move can be done looking only in bottom direction.
+     * @param field board in array format
+     * @param n board size (default 8)
+     * @param playerNr number of player to move
+     * @param move index number of move
+     * @param x move's x position
+     * @param y move's y position
+     * @return number of opponent's pawns that will be changed
+     */
     public static int checkBottom(byte[] field, int n, int playerNr, int move, int x, int y){
         if (move + 2 * n < n * n && field[move + n] == 3 - playerNr) {
             for (int i = move + 2 * n; i < n * n; i += n) {
@@ -39,6 +57,16 @@ public class Utils {
         return -1;
     }
 
+    /**
+     * Checking if given move can be done looking only in top direction.
+     * @param field board in array format
+     * @param n board size (default 8)
+     * @param playerNr number of player to move
+     * @param move index number of move
+     * @param x move's x position
+     * @param y move's y position
+     * @return number of opponent's pawns that will be changed
+     */
     public static int checkTop(byte[] field, int n, int playerNr, int move, int x, int y) {
         if (move - 2 * n >= 0 && field[move - n] == 3 - playerNr) {
             for (int i = move - 2 * n; i >= 0; i -= n) {
@@ -52,6 +80,16 @@ public class Utils {
         return -1;
     }
 
+    /**
+     * Checking if given move can be done looking only in left direction.
+     * @param field board in array format
+     * @param n board size (default 8)
+     * @param playerNr number of player to move
+     * @param move index number of move
+     * @param x move's x position
+     * @param y move's y position
+     * @return number of opponent's pawns that will be changed
+     */
     public static int checkLeft(byte[] field, int n, int playerNr, int move, int x, int y) {
         if (x >= 2 && field[move - 1] == 3 - playerNr) {
             for (int i = 2; i <= x; i++) {
@@ -65,6 +103,16 @@ public class Utils {
         return -1;
     }
 
+    /**
+     * Checking if given move can be done looking only in right direction.
+     * @param field board in array format
+     * @param n board size (default 8)
+     * @param playerNr number of player to move
+     * @param move index number of move
+     * @param x move's x position
+     * @param y move's y position
+     * @return number of opponent's pawns that will be changed
+     */
     public static int checkRight(byte[] field, int n, int playerNr, int move, int x, int y) {
         if (x < n - 2 && field[move + 1] == 3 - playerNr) {
             for (int i = 2; i + x < n; i++) {
@@ -78,6 +126,16 @@ public class Utils {
         return -1;
     }
 
+    /**
+     * Checking if given move can be done looking only in left-bottom diagonal direction.
+     * @param field board in array format
+     * @param n board size (default 8)
+     * @param playerNr number of player to move
+     * @param move index number of move
+     * @param x move's x position
+     * @param y move's y position
+     * @return number of opponent's pawns that will be changed
+     */
     public static int checkLeftBottom(byte[] field, int n, int playerNr, int move, int x, int y) {
         if (move + 2 * n < n * n && x >= 2 && field[move + n - 1] == 3 - playerNr) {
             for (int i = 2; i <= x && move + i * n < n * n; i++) {
@@ -91,6 +149,16 @@ public class Utils {
         return -1;
     }
 
+    /**
+     * Checking if given move can be done looking only in left-top diagonal direction.
+     * @param field board in array format
+     * @param n board size (default 8)
+     * @param playerNr number of player to move
+     * @param move index number of move
+     * @param x move's x position
+     * @param y move's y position
+     * @return number of opponent's pawns that will be changed
+     */
     public static int checkLeftTop(byte[] field, int n, int playerNr, int move, int x, int y) {
         if (move - 2 * n >= 0 && x >= 2 && field[move - n - 1] == 3 - playerNr) {
             for (int i = 2; i <= x && move - i * n >= 0; i++) {
@@ -104,6 +172,16 @@ public class Utils {
         return -1;
     }
 
+    /**
+     * Checking if given move can be done looking only in right-top diagonal direction.
+     * @param field board in array format
+     * @param n board size (default 8)
+     * @param playerNr number of player to move
+     * @param move index number of move
+     * @param x move's x position
+     * @param y move's y position
+     * @return number of opponent's pawns that will be changed
+     */
     public static int checkRightTop(byte[] field, int n, int playerNr, int move, int x, int y) {
         if (move - 2 * n >= 0 && x < n - 2 && field[move - n + 1] == 3 - playerNr) {
             for (int i = 2; i + x < n && move - i * n >= 0; i++) {
@@ -117,6 +195,16 @@ public class Utils {
         return -1;
     }
 
+    /**
+     * Checking if given move can be done looking only in right-bottom diagonal direction.
+     * @param field board in array format
+     * @param n board size (default 8)
+     * @param playerNr number of player to move
+     * @param move index number of move
+     * @param x move's x position
+     * @param y move's y position
+     * @return number of opponent's pawns that will be changed
+     */
     public static int checkRightBottom(byte[] field, int n, int playerNr, int move, int x, int y) {
         if (move + 2 * n < n * n && x < n - 2 && field[move + n + 1] == 3 - playerNr) {
             for (int i = 2; i + x < n && move + i * n < n * n; i++) {
@@ -131,27 +219,55 @@ public class Utils {
     }
 
 
-
+    /**
+     * Convert field from readable format to index number.
+     * @param move readable format of field (1st digit - row, 2nd digit - column)
+     * @param n board size (default 8)
+     * @return field in index format (from 0 to n*n-1)
+     */
     public static int toIndexMove(int move, int n) {
         int x = (move % 10) - 1;
         int y = (move / 10) - 1;
         return toIndexMove(x, y, n);
     }
 
+    /**
+     * Convert field from x, y position to index number.
+     * @param x field's x position
+     * @param y field's y position
+     * @param n board size (default 8)
+     * @return field in index format (from 0 to n*n-1)
+     */
     public static int toIndexMove(int x, int y, int n) {
         return x + y * n;
     }
 
+    /**
+     * Convert field from index number to readable format.
+     * @param move index move field (from 0 to n*n-1)
+     * @param n board size (default 8)
+     * @return field in readable format (1st digit - row, 2nd digit - column)
+     */
     public static int toNormalMove(int move, int n) {
         int x = move % n + 1;
         int y = move / n + 1;
         return x + y * 10;
     }
 
+    /**
+     * Clone board in array format to new byte array.
+     * @param byteArray board in array format
+     * @return clone of given byte array
+     */
     public static byte[] cloneBoard(byte[] byteArray) {
         return byteArray.clone();
     }
 
+    /**
+     * Get random permutation of array with values from 0 to n*n-1.
+     * @param n squared array size
+     * @return array with random values from 0 to n*n-1 (each occuring once)
+     */
     public static int[] getRandomPermutation(int n) {
         Random r = new Random();
         int[] randomArr = new int[n * n];
@@ -168,6 +284,12 @@ public class Utils {
         return randomArr;
     }
 
+    /**
+     * Get clone with similar array and make given amount of random element swaps.
+     * @param act actual version of array
+     * @param swaps amount of swaps to make
+     * @return clone of 'act' array with made swaps
+     */
     public static int[] getSimilarPermutation(int[] act, int swaps) {
         int n = act.length;
         Random r = new Random();
@@ -185,6 +307,13 @@ public class Utils {
         return randomArr;
     }
 
+    /**
+     * Execute given move and change proper pawns in all directions.
+     * @param fields board in array format
+     * @param move index number of move to be made
+     * @param n board size (default 8)
+     * @param playerNumber number of player (1 or 2)
+     */
     public static void move(byte[] fields, int move, int n, byte playerNumber) {
         fields[move] = playerNumber;
 
@@ -199,12 +328,26 @@ public class Utils {
         if (Utils.checkLeftTop(fields, n, playerNumber, move, x, y) > 0) moveFields(fields, playerNumber, move, -n-1);
     }
 
+    /**
+     * Move all fields in line.
+     * @param fields board in array format
+     * @param playerNumber number of player (1 or 2)
+     * @param move index number of move to be made
+     * @param add linear addition to field
+     */
     private static void moveFields(byte[] fields, byte playerNumber, int move, int add) {
         for (int i = 1; fields[move + i * add] != playerNumber; i++) {
             fields[move + i * add] = playerNumber;
         }
     }
 
+    /**
+     * Check if there is any available move for given player.
+     * @param fields board in array format
+     * @param n board size (default 8)
+     * @param playerNumber number of player (1 or 2)
+     * @return
+     */
     public static boolean isAnyMove(byte[] fields, int n, int playerNumber) {
         for (int i = 0; i < n * n; i++) {
             if (Utils.isValidMove(fields, n, playerNumber, i)) {
@@ -214,6 +357,12 @@ public class Utils {
         return false;
     }
 
+    /**
+     * Calculate result of game.
+     * @param fields board in array format
+     * @param n board size (default 8)
+     * @return 0 when 1st player wins, 1 when 2nd player wins, 2 when there is a draw
+     */
     public static int getWinner(byte[] fields, int n) {
         int[] numberOfPawns = new int[2];
         for (int i = 0; i < n*n; i++) {
@@ -226,6 +375,14 @@ public class Utils {
         return 2;
     }
 
+    /**
+     * Calculated amount of changed pawns after given move.
+     * @param field board in array format
+     * @param n board size (default 8)
+     * @param playerNr number of player (1 or 2)
+     * @param move index number of move to be made
+     * @return amount of changed pawns
+     */
     public static int getChangedFields(byte[] field, int n, int playerNr, int move) {
         int res = 0;
 

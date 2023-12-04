@@ -4,10 +4,7 @@ import com.kurbisz.player.BotPlayer;
 import com.kurbisz.GameServer;
 import com.kurbisz.heuristics.Heuristic;
 
-import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class HeuristicTester {
 

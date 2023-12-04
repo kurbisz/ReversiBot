@@ -24,7 +24,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.kurbisz.NBotVsNBotTest</mainClass>
+                            <mainClass>com.kurbisz.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

@@ -1,17 +1,14 @@
 package com.kurbisz.testing;
 
-import com.kurbisz.heuristics.Heuristic;
-import com.kurbisz.heuristics.SimpleHeuristic;
-
-import java.io.IOException;
+import com.kurbisz.heuristics.MainHeuristic;
 
 public class Testing {
 
     public static void main(String[] args) {
         int n = 8;
 
-        SimpleHeuristic heuristic1 = new SimpleHeuristic(1, n);
-        SimpleHeuristic heuristic2 = new SimpleHeuristic(2, n);
+        MainHeuristic heuristic1 = new MainHeuristic(1, n);
+        MainHeuristic heuristic2 = new MainHeuristic(2, n);
 
         int depth = 3;
 

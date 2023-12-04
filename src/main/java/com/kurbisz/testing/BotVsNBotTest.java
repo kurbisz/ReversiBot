@@ -1,9 +1,9 @@
-package com.kurbisz;
+package com.kurbisz.testing;
 
-import com.kurbisz.genetics.GeneticAlgorithm;
+import com.kurbisz.GameServer;
 import com.kurbisz.genetics.HeuristicData;
-import com.kurbisz.heuristics.SimpleHeuristic;
 import com.kurbisz.player.BotPlayer;
+import com.kurbisz.utils.MainHeuristicUtils;
 
 public class BotVsNBotTest {
 
@@ -20,7 +20,7 @@ public class BotVsNBotTest {
         int wins = 0;
         for (int i = 0; i < nr; i++) {
             BotPlayer botPlayer1 = new BotPlayer(1, depth, heuristicData.heuristic, false);
-            HeuristicData heuristicData2 = GeneticAlgorithm.getRandom(2);
+            HeuristicData heuristicData2 = MainHeuristicUtils.getRandom(2);
             BotPlayer botPlayer2 = new BotPlayer(2, depth, heuristicData2.heuristic, false);
             GameServer gameServer = new GameServer(botPlayer1, botPlayer2);
             int res = gameServer.play();
@@ -32,7 +32,7 @@ public class BotVsNBotTest {
         wins = 0;
         for (int i = 0; i < nr; i++) {
             BotPlayer botPlayer1 = new BotPlayer(2, depth, heuristicData.heuristic, false);
-            HeuristicData heuristicData2 = GeneticAlgorithm.getRandom(1);
+            HeuristicData heuristicData2 = MainHeuristicUtils.getRandom(1);
             BotPlayer botPlayer2 = new BotPlayer(1, depth, heuristicData2.heuristic, false);
             GameServer gameServer = new GameServer(botPlayer2, botPlayer1);
             int res = gameServer.play();

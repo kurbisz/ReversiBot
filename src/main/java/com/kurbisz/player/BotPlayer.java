@@ -1,17 +1,27 @@
 package com.kurbisz.player;
 
 import com.kurbisz.Board;
-import com.kurbisz.algorithm.Algorithm;
-import com.kurbisz.algorithm.AlphaBeta;
+import com.kurbisz.minimax.MinimaxAlgorithm;
+import com.kurbisz.minimax.AlphaBeta;
 import com.kurbisz.heuristics.Heuristic;
 
+/**
+ * Implementation for bot player.
+ */
 public class BotPlayer extends Player {
 
 
-    private int depth;
-    private Heuristic heuristic;
-    private boolean logs;
+    protected int depth;
+    protected Heuristic heuristic;
+    protected boolean logs;
 
+    /**
+     * Initialize parameters for bot gameplay.
+     * @param playerNumber number of player
+     * @param depth depth for Minimax algorithm
+     * @param heuristic heuristic function
+     * @param logs flag indicating if board should be printed
+     */
     public BotPlayer(int playerNumber, int depth, Heuristic heuristic, boolean logs) {
         super(playerNumber);
         this.playerNumber = playerNumber;
@@ -20,16 +30,20 @@ public class BotPlayer extends Player {
         this.logs = logs;
     }
 
+    /**
+     * Execute Minimax algorithm with alpha-beta pruning and get best (known) move.
+     * Print board if flag 'logs' has been set.
+     *
+     * @param b actual Board instance
+     * @return move that has been computed
+     */
     @Override
     public int play(Board b) {
         if (logs) b.printBoard();
-        Algorithm a = new AlphaBeta(b.n, playerNumber, depth, heuristic);
+        MinimaxAlgorithm a = new AlphaBeta(b.n, playerNumber, depth, heuristic);
 
-//        long begin = System.nanoTime();
         int minMaxMove = a.getMove(b.fields);
-//        synchronized (STATISTICS_OVERALL_TIME_OBJ) {
-//            STATISTICS_OVERALL_TIME += System.nanoTime() - begin;
-//        }
+
         return minMaxMove;
     }
 

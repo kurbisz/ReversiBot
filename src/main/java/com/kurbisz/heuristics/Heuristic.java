@@ -1,10 +1,10 @@
 package com.kurbisz.heuristics;
 
-import com.kurbisz.Utils;
+import com.kurbisz.utils.Utils;
 
-import java.util.Arrays;
-import java.util.HashMap;
-
+/**
+ * Abstract class representing heuristic, allowing to get evaluation of board.
+ */
 public abstract class Heuristic {
 
     public int playerNumber, n;
@@ -17,13 +17,19 @@ public abstract class Heuristic {
         this.n = n;
     }
 
+    /**
+     * Get evaluation of provided board.
+     * @param field board in array format
+     * @return number representing board state
+     */
     public abstract int getEvaluation(byte[] field);
 
+    /**
+     * Look for any available moves and if there aren't any then calculate who won the game.
+     * @param field board in array format
+     * @return 0 when its draw or there are no moves, MAX_VALUE if playerNumber has won, MIN_VALUE otherwise
+     */
     public int getEndAdvantage(byte[] field) {
-        return getEndAdvantage(field, false);
-    }
-
-    public int getEndAdvantage(byte[] field, boolean isRoot) {
         if (Utils.isAnyMove(field, n, playerNumber) || Utils.isAnyMove(field, n, 3 - playerNumber)) {
             return 0;
         }
@@ -33,6 +39,10 @@ public abstract class Heuristic {
         return Integer.MIN_VALUE;
     }
 
+    /**
+     * Clone instance of Heuristic.
+     * @return new instance of Heuristic
+     */
     public abstract Heuristic clone();
 
 }

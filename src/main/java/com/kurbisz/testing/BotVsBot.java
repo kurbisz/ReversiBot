@@ -1,9 +1,8 @@
-package com.kurbisz;
+package com.kurbisz.testing;
 
+import com.kurbisz.GameServer;
 import com.kurbisz.genetics.HeuristicData;
-import com.kurbisz.heuristics.SimpleHeuristic;
 import com.kurbisz.player.BotPlayer;
-import com.kurbisz.player.HumanPlayer;
 
 public class BotVsBot {
     public static void main(String[] args) {

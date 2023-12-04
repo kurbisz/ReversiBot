@@ -1,9 +1,4 @@
-package com.kurbisz;
-
-import com.kurbisz.algorithm.AlphaBeta;
-import com.kurbisz.genetics.GeneticAlgorithm;
-import com.kurbisz.player.BotPlayer;
-import com.kurbisz.testing.OverallTester;
+package com.kurbisz.testing;
 
 
 public class OverallTesting {

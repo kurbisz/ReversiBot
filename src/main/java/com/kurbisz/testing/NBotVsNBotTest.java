@@ -1,9 +1,10 @@
-package com.kurbisz;
+package com.kurbisz.testing;
 
-import com.kurbisz.algorithm.AlphaBeta;
-import com.kurbisz.genetics.GeneticAlgorithm;
+import com.kurbisz.GameServer;
+import com.kurbisz.minimax.AlphaBeta;
 import com.kurbisz.genetics.HeuristicData;
 import com.kurbisz.player.BotPlayer;
+import com.kurbisz.utils.MainHeuristicUtils;
 
 public class NBotVsNBotTest {
 
@@ -16,9 +17,9 @@ public class NBotVsNBotTest {
 
     private static void test(int depth) {
         for (int i = 0; i < nr; i++) {
-            HeuristicData heuristicData1 = GeneticAlgorithm.getRandom(1);
+            HeuristicData heuristicData1 = MainHeuristicUtils.getRandom(1);
             BotPlayer botPlayer1 = new BotPlayer(1, depth, heuristicData1.heuristic, false);
-            HeuristicData heuristicData2 = GeneticAlgorithm.getRandom(2);
+            HeuristicData heuristicData2 = MainHeuristicUtils.getRandom(2);
             BotPlayer botPlayer2 = new BotPlayer(2, depth, heuristicData2.heuristic, false);
             GameServer gameServer = new GameServer(botPlayer1, botPlayer2);
             gameServer.play();

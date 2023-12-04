@@ -1,7 +1,8 @@
-package com.kurbisz;
+package com.kurbisz.testing;
 
+import com.kurbisz.GameServer;
 import com.kurbisz.genetics.HeuristicData;
-import com.kurbisz.heuristics.SimpleHeuristic;
+import com.kurbisz.heuristics.MainHeuristic;
 import com.kurbisz.player.BotPlayer;
 
 public class BotVsBotTest {
@@ -14,20 +15,20 @@ public class BotVsBotTest {
         test(heuristicData.heuristic, heuristicData2.heuristic, depth, logs);
     }
 
-    private static void test(SimpleHeuristic simpleHeuristic1, SimpleHeuristic simpleHeuristic2, int depth, boolean logs) {
-        simpleHeuristic1.playerNumber = 1;
-        BotPlayer botPlayer1 = new BotPlayer(1, depth, simpleHeuristic1, logs);
-        simpleHeuristic2.playerNumber = 2;
-        BotPlayer botPlayer2 = new BotPlayer(2, depth, simpleHeuristic2, logs);
+    private static void test(MainHeuristic mainHeuristic1, MainHeuristic mainHeuristic2, int depth, boolean logs) {
+        mainHeuristic1.playerNumber = 1;
+        BotPlayer botPlayer1 = new BotPlayer(1, depth, mainHeuristic1, logs);
+        mainHeuristic2.playerNumber = 2;
+        BotPlayer botPlayer2 = new BotPlayer(2, depth, mainHeuristic2, logs);
         GameServer gameServer = new GameServer(botPlayer1, botPlayer2);
         int res = gameServer.play();
         System.out.println("bot 1 vs bot 2: " + res);
 
 
-        simpleHeuristic1.playerNumber = 2;
-        botPlayer1 = new BotPlayer(2, depth, simpleHeuristic1, logs);
-        simpleHeuristic2.playerNumber = 1;
-        botPlayer2 = new BotPlayer(1, depth, simpleHeuristic2, logs);
+        mainHeuristic1.playerNumber = 2;
+        botPlayer1 = new BotPlayer(2, depth, mainHeuristic1, logs);
+        mainHeuristic2.playerNumber = 1;
+        botPlayer2 = new BotPlayer(1, depth, mainHeuristic2, logs);
         gameServer = new GameServer(botPlayer2, botPlayer1);
         res = gameServer.play();
         System.out.println("bot 2 vs bot 1: " + res);
