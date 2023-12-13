@@ -16,7 +16,7 @@ public final class Utils {
      * @param n board size (default 8)
      * @param playerNr number of player to move
      * @param move index number of move
-     * @return
+     * @return true when move is valid, false otherwise
      */
     public static boolean isValidMove(byte[] field, int n, int playerNr, int move) {
         if (field[move] != 0) return false;
@@ -346,7 +346,7 @@ public final class Utils {
      * @param fields board in array format
      * @param n board size (default 8)
      * @param playerNumber number of player (1 or 2)
-     * @return
+     * @return true when there is no possible move, false otherwise
      */
     public static boolean isAnyMove(byte[] fields, int n, int playerNumber) {
         for (int i = 0; i < n * n; i++) {
